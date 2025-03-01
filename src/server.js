@@ -58,6 +58,12 @@ export const setupServer = () => {
     }
   });
 
+  app.use('*', (req, res) => {
+    res.status(404).json({
+      message: 'Not found',
+    });
+  });
+
   app.use((err, req, res, next) => {
     console.error(err);
     res.status(err.status || 500).json({

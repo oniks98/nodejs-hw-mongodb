@@ -1,5 +1,3 @@
-// src/db/initMongoConnection.js
-
 import mongoose from 'mongoose';
 
 import { getEnvVar } from '../utils/getEnvVar.js';

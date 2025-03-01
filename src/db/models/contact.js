@@ -1,4 +1,3 @@
-// src/db/models/contact.js
 import { model, Schema } from 'mongoose';
 
 const contactsSchema = new Schema(
@@ -26,8 +25,8 @@ const contactsSchema = new Schema(
     },
   },
   {
-    timestamps: true, // Додає поля createdAt і updatedAt
-    versionKey: false, // Видаляє поле __v, яке додає mongoose
+    timestamps: true,
+    versionKey: false,
   },
 );
 

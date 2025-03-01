@@ -1,30 +1,13 @@
-getEnvVar.js;
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 export function getEnvVar(name, defaultValue) {
-  const value = process.env[name]?.trim(); // Видаляємо пробіли
+  const value = process.env[name];
 
-  if (value !== undefined && value !== '') {
-    return value;
-  }
+  if (value) return value;
 
-  if (defaultValue !== undefined) {
-    return defaultValue;
-  }
+  if (defaultValue) return defaultValue;
 
-  throw new Error(`Missing required environment variable: ${name}`);
-}
-
-// Додаткова функція для числових змінних (наприклад, PORT)
-export function getEnvVarAsNumber(name, defaultValue) {
-  const value = getEnvVar(name, defaultValue);
-
-  const numberValue = Number(value);
-  if (isNaN(numberValue)) {
-    throw new Error(`Invalid number format for environment variable: ${name}`);
-  }
-
-  return numberValue;
+  throw new Error(`Missing: process.env['${name}'].`);
 }
