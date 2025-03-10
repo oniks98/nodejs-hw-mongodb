@@ -1,4 +1,3 @@
-
 import {
   getAllContacts,
   getContactById,
@@ -66,3 +65,4 @@ export const deleteContactController = async (req, res) => {
   }
 
   res.status(204).send();
+};
