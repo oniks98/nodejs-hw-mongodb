@@ -13,8 +13,36 @@ tags:
     description: Auth operations.
 servers:
   - url: http://localhost:3000
-  - url: https://example.com/api/v1
+  - url: https://contacts-app-u42y.onrender.com
 paths:
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register/register.yaml
+
+  /auth:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+    delete:
+      $ref: ../swagger/paths/auth/logout.yaml
+    patch:
+      $ref: ../swagger/paths/auth/refresh_session.yaml
+    put:
+      $ref: ../swagger/paths/auth/reset_password.yaml
+
+  /contacts:
+    get:
+      $ref: ../swagger/paths/contacts/get.yaml
+    post:
+      $ref: ../swagger/paths/contacts/post.yaml
+
+  /contacts/{id}:
+    delete:
+      $ref: ../swagger/paths/contacts/{id}/delete.yaml
+    get:
+      $ref: ../swagger/paths/contacts/{id}/get.yaml
+    patch:
+      $ref: ../swagger/paths/contacts/{id}/patch.yaml
+
 components:
   securitySchemes:
     bearerAuth:

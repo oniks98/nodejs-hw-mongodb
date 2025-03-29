@@ -8,8 +8,8 @@
     "lint": "eslint src/**/*.js",
     "start": "node ./src/index.js",
     "dev": "nodemon src/index.js",
-      "build": "npm run build-docs",
-    "build-docs": "redocly bundle --ext json -o docs/swagger.json",
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle docs/openapi.yaml --ext json -o docs/swagger.json",
     "preview-docs": "redocly preview-docs"
   },
   "keywords": [],
@@ -41,6 +41,7 @@
     "nodemailer": "^6.10.0",
     "pino-http": "^10.4.0",
     "punycode": "^2.3.1",
+    "swagger-ui-express": "^5.0.1",
     "whatwg-url": "^14.2.0"
   },
   "overrides": {
