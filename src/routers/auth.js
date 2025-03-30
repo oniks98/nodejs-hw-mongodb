@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { validateBody } from '../middlewares/validateBody.js';
+
 import {
   registerUserSchema,
   loginUserSchema,
@@ -7,6 +9,7 @@ import {
   resetPwdSchema,
   loginWithGoogleOAuthSchema,
 } from '../validation/auth.js';
+
 import {
   registerUserController,
   loginUserController,
@@ -15,9 +18,8 @@ import {
   sendResetEmailController,
   resetPwdController,
   loginWithGoogleController,
+  getGoogleOAuthUrlController,
 } from '../controllers/auth.js';
-import { validateBody } from '../middlewares/validateBody.js';
-import { getGoogleOAuthUrlController } from '../controllers/auth.js';
 
 const router = Router();
 
@@ -26,7 +28,6 @@ router.post(
   validateBody(registerUserSchema),
   ctrlWrapper(registerUserController),
 );
-
 router.post(
   '/login',
   validateBody(loginUserSchema),
@@ -34,7 +35,6 @@ router.post(
 );
 
 router.post('/logout', ctrlWrapper(logoutUserController));
-
 router.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
 router.post(
@@ -42,7 +42,6 @@ router.post(
   validateBody(sendResetEmailSchema),
   ctrlWrapper(sendResetEmailController),
 );
-
 router.post(
   '/reset-pwd',
   validateBody(resetPwdSchema),
@@ -50,7 +49,6 @@ router.post(
 );
 
 router.get('/get-oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
-
 router.post(
   '/confirm-oauth',
   validateBody(loginWithGoogleOAuthSchema),
