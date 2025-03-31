@@ -39,16 +39,7 @@ parameters:
     schema:
       type: boolean
       example: false
-  - in: query
-    name: minAge
-    schema:
-      type: number
-      example: 18
-  - in: query
-    name: maxAge
-    schema:
-      type: number
-      example: 65
+
 responses:
   '200':
     description: Successfully found contacts!
