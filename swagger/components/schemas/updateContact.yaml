@@ -1,15 +1,5 @@
 type: object
-required:
-  - _id
-  - name
-  - phoneNumber
-  - contactType
-  - userId
 properties:
-  _id:
-    description: "Contact's id"
-    type: string
-    example: 65e4decdd286b30065d54af9
   name:
     description: "Contact's name"
     type: string
@@ -31,13 +21,8 @@ properties:
     type: string
     enum: ['work', 'home', 'personal']
     example: 'personal'
-  userId:
-    description: 'ID of the user who owns the contact'
-    type: string
-    example: 65e4decdd286b30065d54af9
   photo:
-    description: "Link to the contact's photo (Cloudinary URL or local file path)"
+    description: "Contact's photo"
     type: string
-    example: 'https://res.cloudinary.com/uqwgdu/image/upload/image.png'
-    # Example with local file path:
-    # example: "/uploads/1711902756000-profile.jpg"
+    format: binary
+  
