@@ -19,15 +19,33 @@ paths:
     post:
       $ref: ../swagger/paths/auth/register/register.yaml
 
-  /auth:
+  /auth/reset-pwd:
     post:
-      $ref: ../swagger/paths/auth/login.yaml
+      $ref: ../swagger/paths/auth/reset-pwd/reset-pwd.yaml
+
+  /auth/send-reset-email:
+    post:
+      $ref: ../swagger/paths/auth/send-reset-email/send-reset-email.yaml
+
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login/login.yaml
+
+  /auth/logout:
     delete:
-      $ref: ../swagger/paths/auth/logout.yaml
+      $ref: ../swagger/paths/auth/logout/logout.yaml
+
+  /auth/refresh-session:
     patch:
-      $ref: ../swagger/paths/auth/refresh_session.yaml
-    put:
-      $ref: ../swagger/paths/auth/reset_password.yaml
+      $ref: ../swagger/paths/auth/refresh-session/refresh-session.yaml
+
+  /auth/get-oauth-url:
+    get:
+      $ref: ../swagger/paths/auth/get-oauth-url/get-oauth-url.yaml
+
+  /auth/confirm-oauth:
+    post:
+      $ref: ../swagger/paths/auth/confirm-oauth/confirm-oauth.yaml
 
   /contacts:
     get:
@@ -48,3 +66,7 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionId

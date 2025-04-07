@@ -48,10 +48,15 @@
               "schema": {
                 "type": "object",
                 "required": [
+                  "name",
                   "email",
                   "password"
                 ],
                 "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
                   "email": {
                     "type": "string",
                     "example": "user@example.com"
@@ -98,7 +103,136 @@
         }
       }
     },
-    "/auth": {
+    "/auth/reset-pwd": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Reset password",
+        "operationId": "resetPassword",
+        "description": "Reset user password using a valid token",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "token",
+                  "password"
+                ],
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "example": "abcdef123456"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "NewSecureP@ss123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password has been successfully reset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Password has been successfully reset."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/send-reset-email": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Reset email",
+        "operationId": "sendResetEmail",
+        "description": "Send a reset password email with a reset token to the user",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reset password email has been successfully sent.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Reset password email has been successfully sent."
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -172,7 +306,9 @@
             "$ref": "#/components/responses/500"
           }
         }
-      },
+      }
+    },
+    "/auth/logout": {
       "delete": {
         "tags": [
           "Auth"
@@ -189,24 +325,26 @@
           "204": {
             "description": "Successfully logged out"
           },
-          "404": {
-            "$ref": "#/components/responses/404"
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "500": {
             "$ref": "#/components/responses/500"
           }
         }
-      },
+      }
+    },
+    "/auth/refresh-session": {
       "patch": {
         "tags": [
           "Auth"
         ],
         "summary": "Refresh user session",
         "operationId": "refreshUserSession",
-        "description": "Refresh the access token using refresh token",
+        "description": "Refresh the access token using refresh token from cookies",
         "security": [
           {
-            "bearerAuth": []
+            "cookieAuth": []
           }
         ],
         "responses": {
@@ -239,53 +377,27 @@
               }
             }
           },
-          "404": {
-            "$ref": "#/components/responses/404"
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "500": {
             "$ref": "#/components/responses/500"
           }
         }
-      },
-      "put": {
+      }
+    },
+    "/auth/get-oauth-url": {
+      "get": {
         "tags": [
           "Auth"
         ],
-        "summary": "Reset password",
-        "operationId": "resetPassword",
-        "description": "Reset user password using a valid token",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "token",
-                  "newPassword"
-                ],
-                "properties": {
-                  "token": {
-                    "type": "string",
-                    "example": "abcdef123456"
-                  },
-                  "newPassword": {
-                    "type": "string",
-                    "example": "NewSecureP@ss123"
-                  }
-                }
-              }
-            }
-          }
-        },
+        "summary": "Get Google OAuth URL",
+        "operationId": "getGoogleOAuthUrl",
+        "description": "Generate and return the Google OAuth URL for user authentication.",
+        "security": [],
         "responses": {
           "200": {
-            "description": "Password has been successfully reset.",
+            "description": "Successfully retrieved Google OAuth URL.",
             "content": {
               "application/json": {
                 "schema": {
@@ -297,7 +409,16 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Password has been successfully reset."
+                      "example": "Successfully get Google OAuth url!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "example": "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=YOUR_SCOPES"
+                        }
+                      }
                     }
                   }
                 }
@@ -306,6 +427,73 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/confirm-oauth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login via Google OAuth",
+        "operationId": "loginWithGoogleOAuth",
+        "description": "Log in a user using the provided Google OAuth code and return an access token.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "example": "google_oauth_code"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully logged in via Google OAuth!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in via Google OAuth!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.S9pTijKb-KZylqbt8Tf1A_aFcpq4BeW1JNk7a7uGcmg"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "500": {
             "$ref": "#/components/responses/500"
@@ -725,9 +913,34 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      },
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "sessionId"
       }
     },
     "responses": {
+      "401": {
+        "description": "Unauthorized - the user is not authenticated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Not authorized"
+                }
+              }
+            }
+          }
+        }
+      },
       "404": {
         "description": "Not Found error",
         "content": {

@@ -42,9 +42,13 @@ export const loginUserController = async (req, res) => {
 };
 
 export const logoutUserController = async (req, res) => {
-  if (req.cookies.sessionId) {
-    await logoutUser(req.cookies.sessionId);
+  const { sessionId } = req.cookies;
+
+  if (!sessionId) {
+    return res.status(401).json({ message: 'Not authorized' });
   }
+
+  await logoutUser(sessionId);
 
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
@@ -68,6 +72,10 @@ export const refreshUserSessionController = async (req, res) => {
     sessionId: req.cookies.sessionId,
     refreshToken: req.cookies.refreshToken,
   });
+
+  if (!session) {
+    return res.status(401).json({ message: 'Not authorized' });
+  }
 
   setupSession(res, session);
 
@@ -111,7 +119,18 @@ export const getGoogleOAuthUrlController = async (req, res) => {
 };
 
 export const loginWithGoogleController = async (req, res) => {
-  const session = await loginOrSignupWithGoogle(req.body.code);
+  const { code } = req.body;
+
+  if (!code) {
+    return res.status(401).json({ message: 'Google OAuth code is required.' });
+  }
+
+  const session = await loginOrSignupWithGoogle(code);
+
+  if (!session) {
+    return res.status(401).json({ message: 'Invalid Google OAuth code.' });
+  }
+
   setupSession(res, session);
 
   res.json({

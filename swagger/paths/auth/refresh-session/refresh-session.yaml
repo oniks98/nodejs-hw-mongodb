@@ -2,9 +2,9 @@ tags:
   - Auth
 summary: Refresh user session
 operationId: refreshUserSession
-description: 'Refresh the access token using refresh token'
+description: 'Refresh the access token using refresh token from cookies'
 security:
-  - bearerAuth: []
+  - cookieAuth: []
 responses:
   '200':
     description: Successfully refreshed a session!
@@ -25,7 +25,7 @@ responses:
                 accessToken:
                   type: string
                   example: 'eyJhbGciOiJIUzI1NiIsInR5cCI...'
-  '404':
-    $ref: '../../components/responses/404.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
   '500':
-    $ref: '../../components/responses/500.yaml'
+    $ref: '../../../components/responses/500.yaml'

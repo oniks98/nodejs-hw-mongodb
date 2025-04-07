@@ -13,12 +13,12 @@ requestBody:
         type: object
         required:
           - token
-          - newPassword
+          - password
         properties:
           token:
             type: string
             example: 'abcdef123456'
-          newPassword:
+          password:
             type: string
             example: 'NewSecureP@ss123'
 responses:
@@ -35,7 +35,7 @@ responses:
             message:
               type: string
               example: 'Password has been successfully reset.'
-  '404':
-    $ref: '../../components/responses/404.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
   '500':
-    $ref: '../../components/responses/500.yaml'
+    $ref: '../../../components/responses/500.yaml'
