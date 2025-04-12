@@ -1,0 +1,12 @@
+description: Too many requests
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 429
+        message:
+          type: string
+          example: Too many requests, please try again later.

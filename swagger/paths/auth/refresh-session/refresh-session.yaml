@@ -27,5 +27,7 @@ responses:
                   example: 'eyJhbGciOiJIUzI1NiIsInR5cCI...'
   '401':
     $ref: '../../../components/responses/401.yaml'
+  '429':
+    $ref: '../../../components/responses/429.yaml'
   '500':
     $ref: '../../../components/responses/500.yaml'

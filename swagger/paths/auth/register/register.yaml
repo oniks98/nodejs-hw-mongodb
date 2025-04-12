@@ -43,5 +43,7 @@ responses:
               type: object
   '404':
     $ref: '../../../components/responses/404.yaml'
+  '429':
+    $ref: '../../../components/responses/429.yaml'
   '500':
     $ref: '../../../components/responses/500.yaml'

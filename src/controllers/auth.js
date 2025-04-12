@@ -44,10 +44,6 @@ export const loginUserController = async (req, res) => {
 export const logoutUserController = async (req, res) => {
   const { sessionId } = req.cookies;
 
-  if (!sessionId) {
-    return res.status(401).json({ message: 'Not authorized' });
-  }
-
   await logoutUser(sessionId);
 
   res.clearCookie('sessionId');
@@ -72,10 +68,6 @@ export const refreshUserSessionController = async (req, res) => {
     sessionId: req.cookies.sessionId,
     refreshToken: req.cookies.refreshToken,
   });
-
-  if (!session) {
-    return res.status(401).json({ message: 'Not authorized' });
-  }
 
   setupSession(res, session);
 

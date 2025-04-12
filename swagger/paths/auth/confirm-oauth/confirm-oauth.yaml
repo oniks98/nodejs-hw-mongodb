@@ -38,5 +38,7 @@ responses:
                   example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.S9pTijKb-KZylqbt8Tf1A_aFcpq4BeW1JNk7a7uGcmg'
   '401':
     $ref: '../../../components/responses/401.yaml'
+  '429':
+    $ref: '../../../components/responses/429.yaml'
   '500':
     $ref: '../../../components/responses/500.yaml'
